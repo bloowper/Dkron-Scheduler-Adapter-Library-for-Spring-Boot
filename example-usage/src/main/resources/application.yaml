@@ -1,0 +1,3 @@
+scheduler:
+  dkron-server-url: http://localhost:8081
+  job-execution-server-url: http://host.docker.internal:8080

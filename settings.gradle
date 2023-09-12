@@ -6,9 +6,9 @@
  */
 
 plugins {
-    // Apply the foojay-resolver plugin to allow automatic download of JDKs
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.4.0'
 }
 
-rootProject.name = 'dkronSchedulerLibrary'
-include('dkron-scheduler-client')
+rootProject.name = 'dkron-scheduler-library'
+include 'dkron-scheduler-client'
+include 'example-usage'

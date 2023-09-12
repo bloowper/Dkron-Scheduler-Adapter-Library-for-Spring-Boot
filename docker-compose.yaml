@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  dkron:
+    image: dkron/dkron:3.2.3
+    command: agent --server --bootstrap-expect=1 --node-name=node1 --data-dir=/dkron.data --log-level debug
+    ports:
+      - "8081:8080"
+      - "8946:8946"
+    environment:
+      DKRON_SINGLE: "true"
+      GODEBUG: netdns=go
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
