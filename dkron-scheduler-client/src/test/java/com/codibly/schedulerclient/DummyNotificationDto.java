@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-final class DummyNotificationDto {
+public final class DummyNotificationDto {
     private String field1;
 }
