@@ -6,6 +6,19 @@ import java.time.format.DateTimeFormatter;
 
 public sealed interface Schedule {
     String scheduleExpression();
+
+    static Cron cron(String expression){
+        return new Cron(expression);
+    }
+
+    static Interval interval(Duration interval){
+        return new Interval(interval);
+    }
+
+    static Fixed fixed(Instant at){
+        return new Fixed(at);
+    }
+
     /**
      * Schedule for specifying a job schedule based on a Cron expression.
      *
