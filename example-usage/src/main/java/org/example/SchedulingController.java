@@ -16,17 +16,20 @@ import java.util.UUID;
 @RequestMapping("/job")
 @RequiredArgsConstructor
 class SchedulingController {
+    // Inject job scheduler, provided by library
     private final JobScheduler jobScheduler;
-
 
     @PostMapping
     String scheduleJob(){
+        // Generate unique id for job, need to be unique across dkron cluster
         String id = UUID.randomUUID().toString();
+        // Create job description
         JobDescription jobDescription = new JobDescription(
                 id,
                 new PrintSomethingJobDto("Job %s execution".formatted(id)),
                 new Schedule.Fixed(Instant.now().plus(Duration.ofSeconds(5)))
         );
+        // Schedule job
         jobScheduler.scheduleJob(jobDescription);
         return id;
     }

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+// To enabled scheduler add @EnableDkronScheduler annotation
 @EnableDkronScheduler
 public class ExampleApplication {
     public static void main(String[] args) {
