@@ -6,12 +6,14 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Configuration
 @EnableConfigurationProperties(SchedulerProperties.class)
+@ComponentScan(basePackages = "com.codibly.schedulerclient")
 class SchedulerClientAutoConfiguration {
     private final ApplicationEventPublisher applicationEventPublisher;
     private final SchedulerProperties schedulerProperties;
@@ -47,10 +49,5 @@ class SchedulerClientAutoConfiguration {
         String jobExecutionServerUrl = schedulerProperties.getJobExecutionServerUrl();
         UriComponentsBuilder jobExecutionUriComponentsBuilder = UriComponentsBuilder.fromUriString(jobExecutionServerUrl);
         return new JobSchedulerImpl(dkronRestClient,jobExecutionUriComponentsBuilder);
-    }
-
-    @Bean
-    DkronWebhookWebController dkronWebhookWebController(JobExecutionNotificationService jobExecutionNotificationService) {
-        return new DkronWebhookWebController(jobExecutionNotificationService);
     }
 }
