@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 class JobExecutionListener {
 
+    // Create spring event listener for job executions
     @EventListener
     public void execute(PrintSomethingJobDto printSomethingJobDto) {
         log.info("PrintSomething job executed: {}", printSomethingJobDto);

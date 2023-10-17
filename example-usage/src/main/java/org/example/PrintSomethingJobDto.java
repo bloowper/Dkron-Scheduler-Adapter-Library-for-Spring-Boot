@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+// Create POJO for job execution, this will be used to notify about job execution
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
