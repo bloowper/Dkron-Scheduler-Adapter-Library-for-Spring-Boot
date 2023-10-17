@@ -10,7 +10,6 @@ import java.time.Duration;
 
 @Slf4j
 class DkronRestClient {
-    //TODO: integrate tests with dkron
     private final WebClient dkronWebClient;
     private final RetryBackoffSpec retrySpec;
 
@@ -26,7 +25,8 @@ class DkronRestClient {
                 .bodyValue(job)
                 .retrieve()
                 .bodyToMono(Void.class)
-                .doOnError(throwable -> log.error("Error while creating job: {}", job, throwable))
+                .doOnError(throwable -> log.error("Creating job failed: {}", job, throwable))
+                .doOnSuccess(unused -> log.debug("Successfully created job: {}", job))
                 .retryWhen(retrySpec)
                 .block();
     }
@@ -36,7 +36,8 @@ class DkronRestClient {
                 .uri("/v1/jobs/{jobId}", jobId)
                 .retrieve()
                 .bodyToMono(Void.class)
-                .doOnError(throwable -> log.error("Error while deleting job: {}", jobId, throwable))
+                .doOnError(throwable -> log.error("Creating job failed: {}", jobId, throwable))
+                .doOnSuccess(unused -> log.debug("Successfully deleted job: {}", jobId))
                 .retryWhen(retrySpec)
                 .block();
     }

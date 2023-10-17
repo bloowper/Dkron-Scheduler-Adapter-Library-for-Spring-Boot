@@ -1,6 +1,7 @@
 package com.codibly.schedulerclient;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,11 +16,13 @@ import java.net.URI;
 @RestController
 @RequestMapping("/dkron-webhook")
 @RequiredArgsConstructor
+@Slf4j
 class DkronWebhookWebController {
     private final JobExecutionNotificationService jobExecutionNotificationService;
 
     @PostMapping("/execute-job/{jobId}")
     void executeJob(@RequestBody String body, @PathVariable String jobId) {
+        log.debug("Received request to execute job with id: {}", jobId);
         jobExecutionNotificationService.handleJobExecution(body, jobId);
     }
 
