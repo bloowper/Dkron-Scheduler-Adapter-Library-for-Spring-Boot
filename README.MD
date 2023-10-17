@@ -12,19 +12,6 @@ applications.
 TODO :)
 ```
 
-- and `@EnableDkronScheduler` annotation to your application
-
-```java
-
-@SpringBootApplication
-@EnableDkronScheduler
-public class YourApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(YourApplication.class, args);
-    }
-}
-```
-
 - Eventually [configure properties](#configuration-properties)
 
 # Configuration properties
