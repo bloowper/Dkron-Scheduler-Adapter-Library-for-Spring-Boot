@@ -1,0 +1,37 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id("io.freefair.lombok") version "8.3"
+}
+
+group = "org.example"
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api project(':dkron-scheduler-client')
+    implementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    implementation 'org.assertj:assertj-core:3.24.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            groupId = 'com.codibly'
+            artifactId = 'dkron-scheduler-client-test-tools'
+        }
+    }
+}

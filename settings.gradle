@@ -11,4 +11,5 @@ plugins {
 
 rootProject.name = 'dkron-scheduler-library'
 include 'dkron-scheduler-client'
+include 'dkron-scheduler-client-test-tools'
 include 'example-usage'
