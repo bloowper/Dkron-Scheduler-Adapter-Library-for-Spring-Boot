@@ -99,9 +99,7 @@ import com.codibly.schedulerclient.JobNotificationPayloadCompatibilityChecker;
 import org.junit.jupiter.api.Test;
 
 class PojoCompatibilityTest {
-
-
-    // Create test for checking if given pojo can be used as a job payload
+    
     @Test
     void  checkIfPojoIsCompatibleWithDkronScheduler(){
         // Given
@@ -113,3 +111,13 @@ class PojoCompatibilityTest {
 }
 
 ```
+
+# Submodules
+## dkron-scheduler-client
+Main submodule with scheduler client implementation
+
+## dkron-scheduler-client-test-tool
+Submodule with test tool for dkron-scheduler-client
+
+## example-usage
+Submodule with example usage of dkron-scheduler-client
