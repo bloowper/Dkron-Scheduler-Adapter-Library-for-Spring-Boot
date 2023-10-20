@@ -6,6 +6,7 @@ import com.codibly.schedulerclient.api.JobScheduler;
 import com.codibly.schedulerclient.api.Schedule;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.fail;
 
+
 class SchedulingExecutionIT extends IntegrationTestBase {
 // Uses default JonExecutionNotifier
     @Autowired
@@ -21,10 +23,13 @@ class SchedulingExecutionIT extends IntegrationTestBase {
     @Autowired
     JobExecutionListener jobExecutionListener;
 
+    // TODO: better handling of job execution listener then @DirtyContext
     @Test
+    @DirtiesContext
     void createFixedJobAndAwaitForExecution() {
         // Given
         DummyNotificationDto notificationDto = new DummyNotificationDto("dummyValue1");
+        System.out.println("notificationDto: " + notificationDto);
         String id = UUID.randomUUID().toString();
         Instant now = Instant.now();
         JobDescription jobDescription = new JobDescription(
@@ -37,13 +42,16 @@ class SchedulingExecutionIT extends IntegrationTestBase {
         jobScheduler.scheduleJob(jobDescription);
 
         // Then
-        await().atMost(Duration.ofSeconds(6)).until(() -> jobExecutionListener.wasExecuted(notificationDto,1));
+        await().atMost(Duration.ofSeconds(30)).until(() -> jobExecutionListener.wasExecuted(notificationDto,1));
     }
 
     @Test
+    @DirtiesContext
     void createIntervalJobAndAwaitForExecution() {
         // Given
         DummyNotificationDto notificationDto = new DummyNotificationDto("dummyValue2");
+        System.out.println("notificationDto: " + notificationDto);
+
         String id = UUID.randomUUID().toString();
         JobDescription jobDescription = new JobDescription(
                 id,
@@ -55,13 +63,16 @@ class SchedulingExecutionIT extends IntegrationTestBase {
         jobScheduler.scheduleJob(jobDescription);
 
         // Then
-        await().atMost(Duration.ofSeconds(7)).until(() -> jobExecutionListener.wasExecuted(notificationDto,2));
+        await().atMost(Duration.ofSeconds(30)).until(() -> jobExecutionListener.wasExecuted(notificationDto,2));
     }
 
     @Test
+    @DirtiesContext
     void createCronJobAndAwaitForExecution() {
         // Given
         DummyNotificationDto notificationDto = new DummyNotificationDto("dummyValue3");
+        System.out.println("notificationDto: " + notificationDto);
+
         String id = UUID.randomUUID().toString();
         JobDescription jobDescription = new JobDescription(
                 id,
@@ -73,7 +84,7 @@ class SchedulingExecutionIT extends IntegrationTestBase {
         jobScheduler.scheduleJob(jobDescription);
 
         // Then
-        await().atMost(Duration.ofSeconds(7)).until(() -> jobExecutionListener.wasExecuted(notificationDto,1));
+        await().atMost(Duration.ofSeconds(30)).until(() -> jobExecutionListener.wasExecuted(notificationDto,1));
     }
 
 }

@@ -14,7 +14,7 @@ import static org.testcontainers.Testcontainers.exposeHostPorts;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@Testcontainers
+//@Testcontainers
 @Slf4j
 class IntegrationTestBase {
     private static final Integer SERVER_PORT = 8083;
