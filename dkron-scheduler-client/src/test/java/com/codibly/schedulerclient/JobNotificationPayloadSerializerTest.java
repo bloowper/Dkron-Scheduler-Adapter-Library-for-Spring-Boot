@@ -13,6 +13,8 @@ class JobNotificationPayloadSerializerTest {
 
     private static final TestObject TEST_OBJECT = new TestObject("dummyValue");
     private static final String TEST_OBJECT_JSON = "{\"clazz\":\"com.codibly.schedulerclient.JobNotificationPayloadSerializerTest$TestObject\",\"data\":\"{\\\"someField\\\":\\\"dummyValue\\\"}\"}";
+    private static final TestRecord TEST_RECORD = new TestRecord("dummyValue");
+    private static final String TEST_RECORD_JSON = "{\"clazz\":\"com.codibly.schedulerclient.JobNotificationPayloadSerializerTest$TestRecord\",\"data\":\"{\\\"someField\\\":\\\"dummyValue\\\"}\"}";
 
     @Test
     void shouldMarshallPojo() {
@@ -33,15 +35,21 @@ class JobNotificationPayloadSerializerTest {
     }
 
     @Test
-    @Disabled
     void shouldMarshallRecord() {
-        fail();
+        // when
+        String result = JobNotificationPayloadSerializer.serialize(TEST_RECORD);
+
+        // then
+        assertThat(result).isEqualTo(TEST_RECORD_JSON);
     }
 
     @Test
-    @Disabled
     void shouldUnmarshallRecord() {
-        fail();
+        // when
+        Object result = JobNotificationPayloadSerializer.deserialize(TEST_RECORD_JSON);
+
+        // then
+        assertThat(result).isEqualTo(TEST_RECORD);
     }
 
     @Data
@@ -51,4 +59,6 @@ class JobNotificationPayloadSerializerTest {
         private String someField;
     }
 
+    private record TestRecord(String someField) {
+    }
 }
