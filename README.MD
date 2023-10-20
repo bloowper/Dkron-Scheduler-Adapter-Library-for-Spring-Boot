@@ -83,3 +83,33 @@ class JobExecutionListener {
 ### Custom Notification Handling
 
 For custom implementations, provide your own implementation of JobExecutionNotifier.
+
+## Testing 
+
+There is also test tool library for testing pojo compatibility.
+
+```gradle
+// TODO
+```
+
+### Example
+
+```java
+import com.codibly.schedulerclient.JobNotificationPayloadCompatibilityChecker;
+import org.junit.jupiter.api.Test;
+
+class PojoCompatibilityTest {
+
+
+    // Create test for checking if given pojo can be used as a job payload
+    @Test
+    void  checkIfPojoIsCompatibleWithDkronScheduler(){
+        // Given
+        PrintSomethingJobDto helloWorld = new PrintSomethingJobDto("Hello World");
+
+        // Then
+        JobNotificationPayloadCompatibilityChecker.of(helloWorld).verifySerializationCompatibility();
+    }
+}
+
+```
