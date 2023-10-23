@@ -1,6 +1,6 @@
 # Dkron Scheduler Adapter Library for Spring Boot
 
-The Dkron Scheduler Adapter Library is a powerful, user-friendly Spring Boot library, designed as an adapter for the
+The Dkron Scheduler Adapter Library is a user-friendly Spring Boot library, designed as an adapter for the
 Dkron tool. This library provides convenient job scheduling and execution capabilities within your Spring Boot
 applications.
 
