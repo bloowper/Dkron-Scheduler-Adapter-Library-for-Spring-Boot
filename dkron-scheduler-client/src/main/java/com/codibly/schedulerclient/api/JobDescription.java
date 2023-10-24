@@ -26,7 +26,7 @@ public record JobDescription(
         @NotNull Schedule schedule
 ) {
     public JobDescription {
-        if (ObjectUtils.anyNull()) {
+        if (ObjectUtils.anyNull(id,jobNotificationPayload,schedule)) {
             throw new IllegalArgumentException("All fields are required");
         }
     }
