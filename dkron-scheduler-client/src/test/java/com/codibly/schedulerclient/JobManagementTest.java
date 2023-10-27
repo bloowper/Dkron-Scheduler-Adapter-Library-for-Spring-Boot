@@ -1,6 +1,7 @@
 package com.codibly.schedulerclient;
 
 import com.codibly.schedulerclient.api.JobDescription;
+import com.codibly.schedulerclient.api.JobId;
 import com.codibly.schedulerclient.api.JobScheduler;
 import com.codibly.schedulerclient.api.Schedule;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class JobManagementTest extends SharedTestInitializer {
         Instant executionTime = NOW.plus(Duration.ofSeconds(5));
         DummyNotificationDto dummyJobPayload = new DummyNotificationDto("dummyValue");
         JobDescription jobDescription = new JobDescription(
-                "jobId",
+                JobId.from("jobId"),
                 dummyJobPayload,
                 new Schedule.Fixed(executionTime)
         );
@@ -31,12 +32,12 @@ class JobManagementTest extends SharedTestInitializer {
 
         // Then
         JobDto expectedJob = JobDto.builder()
-                .name(jobDescription.id())
+                .name(jobDescription.getJobId().value())
                 .schedule("@at %s".formatted(executionTime))
                 .executor("http")
                 .executor_config(
                         HttpExecutorConfigDto.builder()
-                                .url("http://this-application/dkron-webhook/execute-job/%s".formatted(jobDescription.id()))
+                                .url("http://this-application/dkron-webhook/execute-job/%s".formatted(jobDescription.getJobId().value()))
                                 .method("POST")
                                 .headers("[\"Content-Type: application/json\"]")
                                 .body("{\"clazz\":\"com.codibly.schedulerclient.DummyNotificationDto\",\"data\":\"{\\\"field1\\\":\\\"dummyValue\\\"}\"}")
@@ -53,7 +54,7 @@ class JobManagementTest extends SharedTestInitializer {
     void shouldCancelJob() {
         // Given
         JobScheduler jobScheduler = schedulerClientAutoConfiguration.jobScheduler(dkronRestClient);
-        String jobId = "jobId";
+        JobId jobId = JobId.from("jobId");
         JobDescription jobDescription = new JobDescription(
                 jobId,
                 new DummyNotificationDto("value"),
@@ -66,7 +67,7 @@ class JobManagementTest extends SharedTestInitializer {
         jobScheduler.cancelJob(jobId);
 
         // Then
-        verify(dkronRestClient).deleteJob(jobId);
+        verify(dkronRestClient).deleteJob(jobId.value());
     }
 
 

@@ -1,6 +1,7 @@
 package com.codibly.schedulerclient;
 
 import com.codibly.schedulerclient.api.JobDescription;
+import com.codibly.schedulerclient.api.JobId;
 import com.codibly.schedulerclient.api.JobScheduler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +16,18 @@ class JobSchedulerImpl implements JobScheduler {
     private static final String METHOD = "POST";
     private final DkronRestClient dkronRestClient;
     private final UriComponentsBuilder jobExecutionUriComponentsBuilder;
-    public void scheduleJob(JobDescription jobDescription) {
+    public JobId scheduleJob(JobDescription jobDescription) {
         log.info("Scheduling job {}", jobDescription);
-        String executeJobUrl = DkronWebhookWebController.createUriToExecuteJob(jobExecutionUriComponentsBuilder, jobDescription.id()).toString();
-        String body = serialize(jobDescription.jobNotificationPayload());
+        String jobId = jobDescription.getJobId().value();
+        String executeJobUrl = DkronWebhookWebController.createUriToExecuteJob(
+                jobExecutionUriComponentsBuilder,
+                jobId
+        ).toString();
+        String body = serialize(jobDescription.getJobNotificationPayload());
         dkronRestClient.createOrUpdateJob(
                 JobDto.builder()
-                        .name(jobDescription.id())
-                        .schedule(jobDescription.schedule().scheduleExpression())
+                        .name(jobId)
+                        .schedule(jobDescription.getSchedule().scheduleExpression())
                         .executor(EXECUTOR)
                         .executor_config(
                                 HttpExecutorConfigDto.builder()
@@ -35,11 +40,12 @@ class JobSchedulerImpl implements JobScheduler {
                         )
                         .build()
         );
+        return jobDescription.getJobId();
     }
 
     @Override
-    public void cancelJob(String jobId) {
+    public void cancelJob(JobId jobId) {
         log.info("Cancelling job {}", jobId);
-        dkronRestClient.deleteJob(jobId);
+        dkronRestClient.deleteJob(jobId.value());
     }
 }
