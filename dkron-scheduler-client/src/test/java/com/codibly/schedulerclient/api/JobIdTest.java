@@ -29,4 +29,13 @@ class JobIdTest {
                 () -> new JobId(id)
         );
     }
+
+    @Test
+    void shouldCreateId() {
+        // Given
+        String id = "id";
+
+        // When
+        new JobId(id);
+    }
 }
