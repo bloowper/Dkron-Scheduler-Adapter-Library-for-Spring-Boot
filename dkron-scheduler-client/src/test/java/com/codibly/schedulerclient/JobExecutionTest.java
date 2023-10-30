@@ -1,6 +1,7 @@
 package com.codibly.schedulerclient;
 
 import com.codibly.schedulerclient.api.JobExecutionNotification;
+import com.codibly.schedulerclient.api.JobId;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.verify;
@@ -17,7 +18,7 @@ class JobExecutionTest extends SharedTestInitializer{
         jobExecutionNotificationService.handleJobExecution(jobJson,jobId);
 
         // Then
-        JobExecutionNotification expectedNotification = new JobExecutionNotification(jobId, new DummyNotificationDto("dummyValue"));
+        JobExecutionNotification expectedNotification = new JobExecutionNotification(new JobId(jobId), new DummyNotificationDto("dummyValue"));
         verify(jobExecutionNotifier).notifyJobExecution(expectedNotification);
     }
 }
