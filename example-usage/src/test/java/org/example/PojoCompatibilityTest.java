@@ -1,6 +1,6 @@
 package org.example;
 
-import com.codibly.schedulerclient.JobNotificationPayloadCompatibilityChecker;
+import com.github.bloowper.schedulerclient.JobNotificationPayloadCompatibilityChecker;
 import org.junit.jupiter.api.Test;
 
 class PojoCompatibilityTest {

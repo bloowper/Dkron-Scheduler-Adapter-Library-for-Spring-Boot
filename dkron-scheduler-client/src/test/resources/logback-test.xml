@@ -7,7 +7,7 @@
     </appender>
 
     <!-- lib log level -->
-    <logger name="com.codibly.schedulerclient" level="DEBUG" />
+    <logger name="com.github.bloowper.schedulerclient" level="DEBUG" />
 
     <!-- Root logger -->
     <root level="INFO">

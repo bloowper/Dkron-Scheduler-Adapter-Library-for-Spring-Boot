@@ -1,9 +1,9 @@
 package org.example;
 
-import com.codibly.schedulerclient.api.JobDescription;
-import com.codibly.schedulerclient.api.JobId;
-import com.codibly.schedulerclient.api.JobScheduler;
-import com.codibly.schedulerclient.api.Schedule;
+import com.github.bloowper.schedulerclient.api.JobDescription;
+import com.github.bloowper.schedulerclient.api.JobId;
+import com.github.bloowper.schedulerclient.api.JobScheduler;
+import com.github.bloowper.schedulerclient.api.Schedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,7 @@ class SchedulingController {
         // Create job description
         JobDescription jobDescription = new JobDescription(
                 new PrintSomethingJobDto("Job execution"),
-                new Schedule.Fixed(Instant.now().plus(Duration.ofSeconds(5)))
+                Schedule.fixed(Instant.now().plus(Duration.ofSeconds(5)))
         );
 
         // Schedule job

@@ -4,7 +4,7 @@ plugins {
     id("io.freefair.lombok") version "8.3"
 }
 
-group = "org.example"
+group = "com.github.bloowper"
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -30,7 +30,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             from components.java
-            groupId = 'com.codibly'
+            groupId = 'com.github.bloower'
             artifactId = 'dkron-scheduler-client-test-tools'
         }
     }
