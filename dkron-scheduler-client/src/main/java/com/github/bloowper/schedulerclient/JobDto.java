@@ -27,7 +27,17 @@ final class JobDto {
     private final @Nullable ExecutorConfig executor_config;
 
 
-    JobDto(@NotNull String name, @Nullable String displayname, @NotNull String schedule, @Nullable String timezone, @Nullable String owner, @Nullable Boolean disabled, @Nullable Integer retries, @Nullable String parent_job, @Nullable Boolean concurrency, @Nullable String executor, @Nullable ExecutorConfig executor_config) {
+    JobDto(@NotNull String name,
+           @Nullable String displayname,
+           @NotNull String schedule,
+           @Nullable String timezone,
+           @Nullable String owner,
+           @Nullable Boolean disabled,
+           @Nullable Integer retries,
+           @Nullable String parent_job,
+           @Nullable Boolean concurrency,
+           @Nullable String executor,
+           @Nullable ExecutorConfig executor_config) {
         if (ObjectUtils.anyNull(name, schedule)) {
             throw new IllegalArgumentException("name and schedule are required");
         }
