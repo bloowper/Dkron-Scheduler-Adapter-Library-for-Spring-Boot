@@ -1,5 +1,7 @@
 package com.github.bloowper.schedulerclient.api;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +14,7 @@ public sealed interface Schedule {
     }
 
     static Interval interval(Duration interval){
-        return new Interval(interval);
+        return new Interval(interval, null,null);
     }
 
     static Fixed fixed(Instant at){
@@ -44,7 +46,7 @@ public sealed interface Schedule {
      * @param interval A positive Duration object that represents the time interval between each job execution.
      *                 At least 1 second
      */
-    record Interval(Duration interval) implements Schedule {
+    record Interval(Duration interval, @Nullable Instant startOfTimeRange, @Nullable Instant endOfTimeRange) implements Schedule, TimeRange {
         public Interval {
             if (interval.isNegative()) {
                 throw new IllegalArgumentException("Interval must be positive");
@@ -57,6 +59,19 @@ public sealed interface Schedule {
         @Override
         public String scheduleExpression() {
             return "@every %ss".formatted(interval.getSeconds());
+        }
+
+        /**
+         * @param startInstant date after which Schedule will be active
+         * @return new Schedule Interval with a start date instant
+         */
+        Interval withStartInstant(Instant startInstant){
+            return new Interval(interval, startInstant, endOfTimeRange);
+        }
+
+        Interval withEndInstant(Instant endInstant){
+            //return new Interval(interval, startOfTimeRange, endInstant);
+            return null;
         }
     }
 
