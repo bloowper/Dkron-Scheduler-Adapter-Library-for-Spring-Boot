@@ -65,13 +65,12 @@ public sealed interface Schedule {
          * @param startInstant date after which Schedule will be active
          * @return new Schedule Interval with a start date instant
          */
-        Interval withStartInstant(Instant startInstant){
+        Interval withStart(Instant startInstant){
             return new Interval(interval, startInstant, endOfTimeRange);
         }
 
-        Interval withEndInstant(Instant endInstant){
-            //return new Interval(interval, startOfTimeRange, endInstant);
-            return null;
+        Interval withEnd(Instant endInstant){
+            return new Interval(interval, startOfTimeRange, endInstant);
         }
     }
 

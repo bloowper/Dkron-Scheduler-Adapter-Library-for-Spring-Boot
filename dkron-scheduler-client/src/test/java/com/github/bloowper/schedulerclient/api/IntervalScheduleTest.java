@@ -52,7 +52,7 @@ class IntervalScheduleTest {
         Schedule.Interval schedule = Schedule.interval(Duration.ofSeconds(60));
 
         // When
-        Schedule.Interval scheduleWithStartInstant = schedule.withStartInstant(EARLY_INSTANT);
+        Schedule.Interval scheduleWithStartInstant = schedule.withStart(EARLY_INSTANT);
 
         // Then
         assertEquals(scheduleWithStartInstant.startOfTimeRange(),EARLY_INSTANT);
@@ -64,7 +64,7 @@ class IntervalScheduleTest {
         Schedule.Interval schedule = Schedule.interval(Duration.ofSeconds(60));
 
         // When
-        Schedule.Interval scheduleWithEndInstant = schedule.withEndInstant(EARLY_INSTANT);
+        Schedule.Interval scheduleWithEndInstant = schedule.withEnd(EARLY_INSTANT);
 
         // Then
         assertEquals(scheduleWithEndInstant.endOfTimeRange(),EARLY_INSTANT);
