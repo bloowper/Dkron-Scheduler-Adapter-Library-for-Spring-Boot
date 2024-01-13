@@ -11,8 +11,8 @@ import java.util.List;
 
 @Slf4j
 class JobExecutionListener {
-    private List<DummyNotificationDto> dummyNotificationDtos = new ArrayList<>();
-    private List<Instant> executionDates = new ArrayList<>(30);
+    final private List<DummyNotificationDto> dummyNotificationDtos = new ArrayList<>();
+    final private List<Instant> executionDates = new ArrayList<>(30);
     @EventListener
     void onJobExecution(DummyNotificationDto dummyNotificationDto) {
         Instant now = Instant.now();
@@ -27,10 +27,6 @@ class JobExecutionListener {
 
     public Boolean wasExecutedWith(DummyNotificationDto dummyNotificationDto){
         return dummyNotificationDtos.stream().anyMatch(dummyNotificationDto::equals);
-    }
-
-    Instant getFirstExecutionDate(){
-        return executionDates.getFirst();
     }
 
 }
