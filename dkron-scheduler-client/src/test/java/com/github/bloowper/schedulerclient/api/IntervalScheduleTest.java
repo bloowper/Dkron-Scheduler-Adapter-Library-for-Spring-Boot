@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.time.Instant;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IntervalScheduleTest {
     public static final Instant EARLY_INSTANT = Instant.parse("2021-01-01T00:00:00Z");
-    public static final Instant LATER_INSTANT = Instant.parse("2021-01-01T00:00:00Z");
+
     @Test
     void shouldCreateIntervalSchedule() {
         // Given
@@ -47,26 +47,26 @@ class IntervalScheduleTest {
     }
 
     @Test
-    void shouldAddStartInstantToInterval(){
+    void shouldAddStartInstantToInterval() {
         // Given
         Schedule.Interval schedule = Schedule.interval(Duration.ofSeconds(60));
 
         // When
-        Schedule.Interval scheduleWithStartInstant = schedule.withStart(EARLY_INSTANT);
+        Schedule.Interval scheduleWithStartInstant = schedule.startAfter(EARLY_INSTANT);
 
         // Then
-        assertEquals(scheduleWithStartInstant.startOfTimeRange(),EARLY_INSTANT);
+        assertEquals(scheduleWithStartInstant.timeRange().getStart().get(), EARLY_INSTANT);
     }
 
     @Test
-    void shouldAddEndInstantToInterval(){
+    void shouldAddEndInstantToInterval() {
         // Given
         Schedule.Interval schedule = Schedule.interval(Duration.ofSeconds(60));
 
         // When
-        Schedule.Interval scheduleWithEndInstant = schedule.withEnd(EARLY_INSTANT);
+        Schedule.Interval scheduleWithEndInstant = schedule.endBefore(EARLY_INSTANT);
 
         // Then
-        assertEquals(scheduleWithEndInstant.endOfTimeRange(),EARLY_INSTANT);
+        assertEquals(scheduleWithEndInstant.timeRange().getEnd().get(), EARLY_INSTANT);
     }
 }

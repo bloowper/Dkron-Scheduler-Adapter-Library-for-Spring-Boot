@@ -1,14 +1,11 @@
-package com.github.bloowper.schedulerclient;
+package com.github.bloowper.schedulerclient.api;
 
-import com.github.bloowper.schedulerclient.api.JobDescription;
-import com.github.bloowper.schedulerclient.api.JobId;
-import com.github.bloowper.schedulerclient.api.Schedule;
+import com.github.bloowper.schedulerclient.SharedTestInitializer;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 class JobSchedulerTest extends SharedTestInitializer {
 

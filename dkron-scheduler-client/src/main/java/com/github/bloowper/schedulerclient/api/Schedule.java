@@ -1,7 +1,5 @@
 package com.github.bloowper.schedulerclient.api;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +12,7 @@ public sealed interface Schedule {
     }
 
     static Interval interval(Duration interval){
-        return new Interval(interval, null,null);
+        return new Interval(interval, TimeRange.infinite());
     }
 
     static Fixed fixed(Instant at){
@@ -46,13 +44,16 @@ public sealed interface Schedule {
      * @param interval A positive Duration object that represents the time interval between each job execution.
      *                 At least 1 second
      */
-    record Interval(Duration interval, @Nullable Instant startOfTimeRange, @Nullable Instant endOfTimeRange) implements Schedule, TimeRange {
+    record Interval(Duration interval, TimeRange timeRange) implements Schedule {
         public Interval {
             if (interval.isNegative()) {
                 throw new IllegalArgumentException("Interval must be positive");
             }
             if (interval.getSeconds() < 1) {
                 throw new IllegalArgumentException("Interval must be at least 1 second");
+            }
+            if(timeRange == null){
+                throw new IllegalArgumentException("Interval must have a specified time range in which it will be active");
             }
         }
 
@@ -65,12 +66,16 @@ public sealed interface Schedule {
          * @param startInstant date after which Schedule will be active
          * @return new Schedule Interval with a start date instant
          */
-        Interval withStart(Instant startInstant){
-            return new Interval(interval, startInstant, endOfTimeRange);
+        public Interval startAfter(Instant startInstant){
+            return new Interval(interval, timeRange.withStart(startInstant));
         }
 
-        Interval withEnd(Instant endInstant){
-            return new Interval(interval, startOfTimeRange, endInstant);
+        /**
+         * @param endInstant date after which Schedule will NOT be active
+         * @return new Schedule Interval with an end date instant
+         */
+        public Interval endBefore(Instant endInstant){
+            return new Interval(interval, timeRange.withEnd(endInstant));
         }
     }
 
