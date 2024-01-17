@@ -10,7 +10,7 @@ import java.time.ZoneOffset;
 
 import static org.mockito.Mockito.mock;
 
-class SharedTestInitializer {
+public class SharedTestInitializer {
 
     protected static final Instant NOW = Instant.parse("2021-01-01T00:00:00.00Z");
     protected static final Clock CLOCK = Clock.fixed(NOW, ZoneOffset.UTC);
