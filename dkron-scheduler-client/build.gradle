@@ -42,8 +42,9 @@ tasks.named('test') {
 
 publishing {
     publications {
-        maven(MavenPublication) {
-            from components.java
+        maven{
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/bloowper/Dkron-Scheduler-Adapter-Library-for-Spring-Boot"
             groupId = 'com.github.bloowper'
             artifactId = 'dkron-scheduler-client'
         }
